@@ -12,7 +12,7 @@ resource "aws_eip" "nat" {
 # https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/nat_gateway
 resource "aws_nat_gateway" "nat" {
   allocation_id = aws_eip.nat.id
-  subnet_id     = aws_subnet.public.id
+  subnet_id     = aws_subnet.public-us-east-1a.id
 
   tags = {
     Name = "nat"
