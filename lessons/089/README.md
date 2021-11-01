@@ -77,13 +77,13 @@ helm install \
 
 - Create namespace
 ```bash
-kubectl create ns actions-runner-system
+kubectl create ns actions
 ```
 
 - Create secret to authenticate with GitHub
 ```bash
 kubectl create secret generic controller-manager \
-    -n actions-runner-system \
+    -n actions \
     --from-literal=github_app_id=<> \
     --from-literal=github_app_installation_id=<> \
     --from-file=github_app_private_key=<>
@@ -98,9 +98,9 @@ helm search repo actions
 
 - Install Helm chart
 ```bash
-helm install actions-runner-system \
+helm install runner \
     actions-runner-controller/actions-runner-controller \
-    --namespace actions-runner-system \
+    --namespace actions \
     --version 0.14.0 \
     --set syncPeriod=1m
 ```
@@ -110,8 +110,8 @@ helm install actions-runner-system \
 - Create `k8s/runner.yaml`
 ```bash
 kubectl apply -f k8s/runner.yaml
-kubectl get pods -n actions-runner-system
-kubectl logs -f k8s-single-runner -c runner -n actions-runner-system
+kubectl get pods -n actions
+kubectl logs -f k8s-single-runner -c runner -n actions
 ```
 
 - Go to GitHub to check self hosted runners
@@ -125,7 +125,7 @@ git clone git@github.com:antonputra/lesson-089.git
 - Commit & push
 - Check pods
 ```bash
-kubectl get pods -n actions-runner-system
+kubectl get pods -n actions
 ```
 
 
@@ -134,7 +134,7 @@ kubectl get pods -n actions-runner-system
 - Create `k8s/runner-deployment.yaml`
 ```bash
 kubectl apply -f k8s/runner-deployment.yaml
-kubectl get pods -n actions-runner-system
+kubectl get pods -n actions
 ```
 
 - Check in GitHub repo self-hosted runners
