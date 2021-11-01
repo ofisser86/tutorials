@@ -66,34 +66,42 @@ helm install \
   --set installCRDs=true
 ```
 
-## Links
+## Install actions-runner-controller
 
-- [Hosting your own runners](https://docs.github.com/en/actions/hosting-your-own-runners)
-- [GitHub Actions Runner](https://github.com/actions/runner)
-- [actions-runner-controller](https://github.com/actions-runner-controller/actions-runner-controller)
+- Create GitHub App
 
-
-
-
-values.yaml https://github.com/actions-runner-controller/actions-runner-controller/blob/master/charts/actions-runner-controller/values.yaml
-
-
-App ID: 148756
-https://github.com/settings/installations/20434974
-
+- Create namespace
+``bash
 kubectl create ns actions-runner-system
+```
 
+- Create secret to authenticate with GitHub
+```bash
 kubectl create secret generic controller-manager \
     -n actions-runner-system \
-    --from-literal=github_app_id=148756 \
-    --from-literal=github_app_installation_id=20434974 \
-    --from-file=github_app_private_key=lesson-089.2021-11-01.private-key.pem
+    --from-literal=github_app_id=<> \
+    --from-literal=github_app_installation_id=<> \
+    --from-file=github_app_private_key=<>
+```
 
+- Add actions-runner-system  helm repo
+```bash
 helm repo add actions-runner-controller https://actions-runner-controller.github.io/actions-runner-controller
 helm repo update
+```
 
+- Install Helm chart
+```bash
 helm install actions-runner-system \
     actions-runner-controller/actions-runner-controller \
     --namespace actions-runner-system \
     --version 0.14.0 \
     --set syncPeriod=1m
+```
+
+## Links
+
+- [Hosting your own runners](https://docs.github.com/en/actions/hosting-your-own-runners)
+- [GitHub Actions Runner](https://github.com/actions/runner)
+- [actions-runner-controller](https://github.com/actions-runner-controller/actions-runner-controller)
+- [actions-runner-controller values.yaml](https://github.com/actions-runner-controller/actions-runner-controller/blob/master/charts/actions-runner-controller/values.yaml)
