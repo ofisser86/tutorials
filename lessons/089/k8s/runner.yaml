@@ -2,7 +2,8 @@
 apiVersion: actions.summerwind.dev/v1alpha1
 kind: Runner
 metadata:
-  name: k8s-runner
+  name: k8s-single-runner
+  namespace: actions-runner-system
 spec:
   repository: antonputra/lesson-089
   env: []

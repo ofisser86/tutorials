@@ -2,10 +2,11 @@
 apiVersion: actions.summerwind.dev/v1alpha1
 kind: HorizontalRunnerAutoscaler
 metadata:
-  name: example-runnerdeploy-autoscaler
+  name: k8s-runners-autoscaler
+  namespace: actions-runner-system
 spec:
   scaleTargetRef:
-    name: example-runnerdeploy
+    name: k8s-runners
   scaleDownDelaySecondsAfterScaleOut: 300
   minReplicas: 1
   maxReplicas: 10

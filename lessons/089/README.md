@@ -52,7 +52,12 @@ helm repo update
 
 - Search for latest verion
 ```bash
-helm repo search cert-manager 
+helm search repo cert-manager
+```
+
+- Split the screen and install Helm chart
+```bash
+watch kubectl get pods -A
 ```
 
 - Install Helm chart
@@ -68,7 +73,7 @@ helm install \
 
 ## Install actions-runner-controller
 
-- Create GitHub App
+- Create GitHub App, call it `k8s-actions-89`
 
 - Create namespace
 ``bash
@@ -88,6 +93,7 @@ kubectl create secret generic controller-manager \
 ```bash
 helm repo add actions-runner-controller https://actions-runner-controller.github.io/actions-runner-controller
 helm repo update
+helm search repo actions
 ```
 
 - Install Helm chart
@@ -97,6 +103,51 @@ helm install actions-runner-system \
     --namespace actions-runner-system \
     --version 0.14.0 \
     --set syncPeriod=1m
+```
+
+## Create Single GitHub Actions Self Hosted Runner 
+
+- Create `k8s/runner.yaml`
+```bash
+kubectl apply -f k8s/runner.yaml
+kubectl get pods -n actions-runner-system
+kubectl logs -f k8s-single-runner -c runner -n actions-runner-system
+```
+
+- Go to GitHub to check self hosted runners
+
+- Clone `lesson-089` repository
+```bash
+git clone git@github.com:antonputra/lesson-089.git
+```
+
+- Create `.github/workflows/main.yaml`
+- Commit & push
+- Check pods
+```bash
+kubectl get pods -n actions-runner-system
+```
+
+
+## Create Multiple GitHub Actions Self Hosted Runners
+
+- Create `k8s/runner-deployment.yaml`
+```bash
+kubectl apply -f k8s/runner-deployment.yaml
+kubectl get pods -n actions-runner-system
+```
+
+- Check in GitHub repo self-hosted runners
+
+- Create 3 build jobs with docker
+
+- Create `Dockerfile`
+
+- Ceate `.github/workflows/example-2.yaml`
+
+- Deploy `k8s/horizontal-runner-autoscaler.yaml`
+```bash
+kubectl apply -f k8s/horizontal-runner-autoscaler.yaml
 ```
 
 ## Links
