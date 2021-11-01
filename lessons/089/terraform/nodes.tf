@@ -33,7 +33,7 @@ resource "aws_iam_role_policy_attachment" "nodes-AmazonEC2ContainerRegistryReadO
 resource "aws_eks_node_group" "general" {
   cluster_name    = aws_eks_cluster.demo.name
   node_group_name = "general"
-  node_role_arn   = aws_iam_role.demo.arn
+  node_role_arn   = aws_iam_role.nodes.arn
 
   subnet_ids = [
     aws_subnet.private-us-east-1a.id,
@@ -44,13 +44,13 @@ resource "aws_eks_node_group" "general" {
   instance_types = ["t3.small"]
 
   scaling_config {
-    desired_size = 1
+    desired_size = 2
     max_size     = 5
     min_size     = 1
   }
 
   update_config {
-    max_unavailable = 2
+    max_unavailable = 1
   }
 
   # Ensure that IAM Role permissions are created before and deleted after EKS Node Group handling.

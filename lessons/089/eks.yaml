@@ -2,7 +2,7 @@
 apiVersion: eksctl.io/v1alpha5
 kind: ClusterConfig
 metadata:
-  name: demo
+  name: github
   region: us-east-1
   version: "1.21"
 availabilityZones:

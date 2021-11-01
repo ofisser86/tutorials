@@ -1,0 +1,12 @@
+---
+apiVersion: actions.summerwind.dev/v1alpha1
+kind: RunnerDeployment
+metadata:
+  name: example-runnerdeploy
+spec:
+  template:
+    spec:
+      repository: antonputra/lesson-089
+      labels:
+        - custom-runner
+      env: []

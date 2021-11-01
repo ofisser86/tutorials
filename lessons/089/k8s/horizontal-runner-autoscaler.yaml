@@ -1,0 +1,14 @@
+---
+apiVersion: actions.summerwind.dev/v1alpha1
+kind: HorizontalRunnerAutoscaler
+metadata:
+  name: example-runnerdeploy-autoscaler
+spec:
+  scaleTargetRef:
+    name: example-runnerdeploy
+  minReplicas: 1
+  maxReplicas: 10
+  metrics:
+  - type: TotalNumberOfQueuedAndInProgressWorkflowRuns
+    repositoryNames:
+    - antonputra/lesson-089
