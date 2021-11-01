@@ -5,7 +5,6 @@
 Points
 - Free
 - No incoming connections only long poll
-- Can i use autoscalling group?
 - Many people already have Kubernetes
 
 - Are free to use with GitHub Actions, but you are responsible for the cost of maintaining your runner machines.
@@ -13,6 +12,59 @@ Points
 - We recommend that you only use self-hosted runners with private repositories.
 
 ## Content
+
+## Create GitHub Repository
+
+- Create private GitHub repository `lesson-089`
+
+
+## Create EKS Cluster with Terraform
+
+- Go over each file under `terraform` folder
+
+- Create EKS with terraform
+```bash
+terraform init
+terraform apply
+```
+
+- Configure kubectl
+```bash
+aws eks --region us-east-1 update-kubeconfig --name demo
+```
+if you get an error `'NoneType' object is not iterable`, run `rm ~/.kube/config`
+
+- Check connection with Kubernetes
+```bash
+kubectl get svc
+```
+## Install Cert-Manager on Kubernetes
+
+- Add Helm repo
+```bash
+helm repo add jetstack https://charts.jetstack.io
+```
+
+- Update Helm
+```bash
+helm repo update
+```
+
+- Search for latest verion
+```bash
+helm repo search cert-manager 
+```
+
+- Install Helm chart
+```bash
+helm install \
+  cert-manager jetstack/cert-manager \
+  --namespace cert-manager \
+  --create-namespace \
+  --version v1.6.0 \
+  --set prometheus.enabled=false \
+  --set installCRDs=true
+```
 
 ## Links
 
@@ -22,32 +74,6 @@ Points
 
 
 
-
-
-
-aws eks --region us-east-1 update-kubeconfig --name demo
-> 'NoneType' object is not iterable
-rm ~/.kube/config
-kubectl get svc
-
-Install cert-manager
-kubectl apply -f https://github.com/jetstack/cert-manager/releases/download/v1.6.0/cert-manager.yaml
-
-
-helm repo add jetstack https://charts.jetstack.io
-helm repo update
-
-helm install \
-  cert-manager jetstack/cert-manager \
-  --namespace cert-manager \
-  --create-namespace \
-  --version v1.6.0 \
-  --set prometheus.enabled=false \
-  --set installCRDs=true
-
-
-# REPLACE "v0.20.2" with the version you wish to deploy
-kubectl apply -f https://github.com/actions-runner-controller/actions-runner-controller/releases/download/v0.20.2/actions-runner-controller.yaml
 
 values.yaml https://github.com/actions-runner-controller/actions-runner-controller/blob/master/charts/actions-runner-controller/values.yaml
 

@@ -6,6 +6,7 @@ metadata:
 spec:
   scaleTargetRef:
     name: example-runnerdeploy
+  scaleDownDelaySecondsAfterScaleOut: 300
   minReplicas: 1
   maxReplicas: 10
   metrics:
