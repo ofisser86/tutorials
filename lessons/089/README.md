@@ -76,7 +76,7 @@ helm install \
 - Create GitHub App, call it `k8s-actions-89`
 
 - Create namespace
-``bash
+```bash
 kubectl create ns actions-runner-system
 ```
 
